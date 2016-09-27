@@ -1,0 +1,45 @@
+heat_template_version: 2013-05-23
+
+description: Simple template to deploy a single compute instance
+
+resources:
+  my_instance:
+    type: OS::Nova::Server
+    properties:
+      key_name: akka-skomarov
+      image: ubuntu-trusty
+      flavor: m1.medium
+      networks:
+        - network: cloud
+      user_data: |
+        #!/bin/bash
+        sudo chsh -s /bin/bash ec2-user
+        echo "sudo apt-get update" >> /tmp/log
+        sudo apt-get update
+        echo "sudo apt-get install -y puppet git unzip" >> /tmp/log
+        sudo apt-get install -y puppet git unzip
+        echo "sudo cd /etc/puppet/modules" >> /tmp/log
+        cd /etc/puppet/modules
+        pwd >> /tmp/log
+        echo "sudo puppet module install aco-oracle_java" >> /tmp/log
+        sudo puppet module install aco-oracle_java
+        echo "git clone https://github.com/dod256/PuppetSandbox.git" >> /tmp/log
+        git clone https://github.com/dod256/PuppetSandbox.git
+        echo "sudo cd /etc/puppet/modules/PuppetSandbox" >> /tmp/log
+        cd /etc/puppet/modules/PuppetSandbox
+        pwd >> /tmp/log
+        echo "sudo mv /etc/puppet/modules/PuppetSandbox/p.pp /etc/puppet/manifests/p.pp" >> /tmp/log
+        sudo mv p.pp /etc/puppet/manifests/
+        echo "puppet apply --modulepath /etc/puppet/modules/ /etc/puppet/manifests/p.pp" >> /tmp/log
+        sudo puppet apply --modulepath /etc/puppet/modules/ /etc/puppet/manifests/p.pp >> /tmp/log
+        echo "puppet apply complete!" >> /tmp/log
+        echo "sudo source /home/ec2-user/.profile" >> /tmp/log
+        sudo source /home/ec2-user/.profile
+        echo "cd /etc/puppet/modules/PuppetSandbox" >> /tmp/log
+        cd /etc/puppet/modules/PuppetSandbox
+        echo "git clone https://github.com/dod256/MatrixMultiplierAkka.git" >> /tmp/log
+        git clone https://github.com/dod256/MatrixMultiplierAkka.git
+        echo "sudo mv /etc/puppet/modules/PuppetSandbox/.profile /home/ec2-user/.profile" >> /tmp/log
+        sudo mv /etc/puppet/modules/PuppetSandbox/.profile /home/ec2-user/.profile
+        echo "cd /etc/puppet/modules/PuppetSandbox/MatrixMultiplierAkka" >> /tmp/log
+        cd /etc/puppet/modules/PuppetSandbox/MatrixMultiplierAkka
