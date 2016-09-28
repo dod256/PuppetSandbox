@@ -37,9 +37,7 @@ resources:
         sudo source /home/ec2-user/.profile
         echo "cd /etc/puppet/modules/PuppetSandbox" >> /tmp/log
         cd /etc/puppet/modules/PuppetSandbox
-        echo "git clone https://github.com/dod256/MatrixMultiplierAkka.git" >> /tmp/log
-        git clone https://github.com/dod256/MatrixMultiplierAkka.git
         echo "sudo mv /etc/puppet/modules/PuppetSandbox/.profile /home/ec2-user/.profile" >> /tmp/log
         sudo mv /etc/puppet/modules/PuppetSandbox/.profile /home/ec2-user/.profile
-        echo "cd /etc/puppet/modules/PuppetSandbox/MatrixMultiplierAkka" >> /tmp/log
-        cd /etc/puppet/modules/PuppetSandbox/MatrixMultiplierAkka
+        echo "java -jar MatrixMultiplierAkka.jar" >> /tmp/log
+        sudo java -jar MatrixMultiplierAkka.jar
