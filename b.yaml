@@ -1,0 +1,30 @@
+heat_template_version: 2013-05-23
+
+description: Simple template to deploy a single compute instance
+
+resources:
+  my_instance:
+    type: OS::Nova::Server
+    properties:
+      key_name: dod
+      image: Ubuntu-14.04-x86_64
+      flavor: m1.medium
+      networks:
+        - network: student-main-network
+      user_data: |
+       #!/bin/bash
+        sudo chsh -s /bin/bash ec2-user
+        cd /home/ec2-user
+        echo "sudo apt-get update" >> /tmp/log
+        sudo apt-get update
+        echo "sudo apt-get install -y puppet git" >> /tmp/log
+        sudo apt-get install -y puppet git
+        echo "sudo puppet module install aco-oracle_java" >> /tmp/log
+        sudo puppet module install aco-oracle_java
+        echo "sudo apt-get update" >> /tmp/log
+        echo "git clone https://github.com/dod256/PuppetSandbox.git" >> /tmp/log
+        git clone https://github.com/dod256/PuppetSandbox.git
+        echo "sudo puppet apply PuppetSandbox/p.pp" >> /tmp/log
+        sudo source /home/ec2-user/.profile
+        sudo mv /home/ec2-user/PuppetSandbox/.profile /home/ec2-user/.profile
+        sudo puppet apply /home/ec2-user/PuppetSandbox/p.pp
