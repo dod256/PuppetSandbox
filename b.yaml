@@ -25,6 +25,4 @@ resources:
         echo "git clone https://github.com/dod256/PuppetSandbox.git" >> /tmp/log
         git clone https://github.com/dod256/PuppetSandbox.git
         echo "sudo puppet apply PuppetSandbox/p.pp" >> /tmp/log
-        sudo source /home/ec2-user/.profile
-        sudo mv /home/ec2-user/PuppetSandbox/.profile /home/ec2-user/.profile
         sudo puppet apply /home/ec2-user/PuppetSandbox/p.pp
