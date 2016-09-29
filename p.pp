@@ -1,4 +1,4 @@
 class { 'oracle_java':
-  version => '7u45',
+  version => '8u91',
   type => 'jdk'
 }
